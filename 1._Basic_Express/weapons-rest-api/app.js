@@ -1,4 +1,5 @@
-const app = require("express")();
+import express from "express";
+const app = express();
 
 const weapons = [
     { id: 1, name: "handgun", weightInGrams: "500", color: "red" },
