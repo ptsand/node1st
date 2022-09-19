@@ -6,6 +6,7 @@ const weapons = [
     { id: 2, name: "shotgun", weightInGrams: 1000, color: "blue" },
     { id: 3, name: "machinegun", weightInGrams: 2000, color: "black" },
 ]
+let currentId = weapons[weapons.length-1].id
 // for PUT and POST validation
 const invalidReqBody = (reqBody)=>
     !(reqBody.name && Number.isFinite(Number(reqBody.weightInGrams)) && reqBody.color);
@@ -34,7 +35,7 @@ app.post("/weapons", (req, res) => {
         return;
     }
     // auto increment id, concat with valid req.body
-    const weapon = {id: weapons[weapons.length-1].id + 1, ...req.body};
+    const weapon = {id: ++currentId, ...req.body};
     weapons.push(weapon);
     res.json({message: `Added weapon: ${JSON.stringify(weapon)}`});
 });
