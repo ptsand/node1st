@@ -35,7 +35,7 @@ app.post("/weapons", (req, res) => {
         return;
     }
     // auto increment id, concat with valid req.body
-    const weapon = {id: ++currentId, ...req.body};
+    const weapon = { ...req.body, id: ++currentId };
     weapons.push(weapon);
     res.json({message: "Weapon created", data: weapon});
 });
@@ -49,12 +49,12 @@ app.put("/weapons/:id([0-9]+)", (req, res) => {
     const id = Number(req.params.id);
     const index = weapons.findIndex(weapon => weapon.id === id);
     if (index !== -1) { // Weapon with id exists
-        weapons[index] = {id: id, ...req.body};
+        weapons[index] = { ...req.body, id: id };
         res.json({message: "Weapon Updated",  data: weapons[index]});
         return;
     }
     // else create
-    const weapon = {id: ++currentId, ...req.body};
+    const weapon = { ...req.body, id: ++currentId};
     weapons.push(weapon);
     res.status(201).json({message: "Weapon created", data: weapon});
 });
