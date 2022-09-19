@@ -53,8 +53,8 @@ app.put("/weapons/:id([0-9]+)", (req, res) => {
         res.json({message: `Updated weapon: ${JSON.stringify(weapons[index])}`});
         return;
     }
-    // else create with consecutive id
-    const weapon = {id: weapons[weapons.length-1].id + 1, ...req.body};
+    // else create
+    const weapon = {id: ++currentId, ...req.body};
     weapons.push(weapon);
     res.json({message: `Added weapon: ${JSON.stringify(weapon)}`});
 });
