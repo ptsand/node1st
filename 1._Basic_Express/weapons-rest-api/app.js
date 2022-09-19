@@ -37,7 +37,7 @@ app.post("/weapons", (req, res) => {
     // auto increment id, concat with valid req.body
     const weapon = {id: ++currentId, ...req.body};
     weapons.push(weapon);
-    res.json({message: `Added weapon: ${JSON.stringify(weapon)}`});
+    res.json({message: "Weapon created", data: weapon});
 });
 
 app.put("/weapons/:id([0-9]+)", (req, res) => {
@@ -50,28 +50,26 @@ app.put("/weapons/:id([0-9]+)", (req, res) => {
     const index = weapons.findIndex(weapon => weapon.id === id);
     if (index !== -1) { // Weapon with id exists
         weapons[index] = {id: id, ...req.body};
-        res.json({message: `Updated weapon: ${JSON.stringify(weapons[index])}`});
+        res.json({message: "Weapon Updated",  data: weapons[index]});
         return;
     }
     // else create
     const weapon = {id: ++currentId, ...req.body};
     weapons.push(weapon);
-    res.json({message: `Added weapon: ${JSON.stringify(weapon)}`});
+    res.status(201).json({message: "Weapon created", data: weapon});
 });
 
 app.patch("/weapons/:id([0-9]+)", (req, res) => {
     // Partial update, supplied fields only
     const id = Number(req.params.id);
     const index = weapons.findIndex(weapon => weapon.id === id);
-    if (index !== -1) { // weapon with id exists, patch supplied fields
-        if (req.body.name) weapons[index].name = req.body.name;
-        if (Number.isFinite(Number(req.body.weightInGrams))) weapons[index].weightInGrams = req.body.weightInGrams;
-        if (req.body.color) weapons[index].color = req.body.color;
-        res.json({message: `Patched weapon: ${JSON.stringify(weapons[index])}`});
+    if (index !== -1) {
+        // weapon with id exists, patch supplied fields (if identical keys, the last takes effect)
+        weapons[index] = { ...weapons[index], ...req.body, id: req.params.id }
+        res.json({message: "Weapon patched", data: weapons[index]});
         return;
     }
-    res.status(404);
-    res.json({message: "Weapon not found"});
+    res.status(404).json({message: `Weapon with id ${id} not found`});
 });
 
 app.delete("/weapons/:id([0-9]+)", (req, res) => {
