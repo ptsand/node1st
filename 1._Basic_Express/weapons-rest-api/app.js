@@ -18,12 +18,12 @@ app.get("/weapons", (req, res) => {
 });
 
 app.get("/weapons/:id([0-9]+)", (req, res) => {
-    const weapon = weapons.filter(weapon => weapon.id === Number(req.params.id));
-    if (weapon.length === 1) {
+    const weapon = weapons.find(weapon => weapon.id === Number(req.params.id));
+    if (weapon) {
         res.json(weapon);
     } else {
         res.status(404);
-        res.json({message: "Movie not found"});
+        res.json({message: "Weapon not found"});
     }
 });
 
