@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+    <style>
+        span {
+            margin-left: 0.5rem;
+        }
+        span:first-child {
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body>
+    <h3>Welcome to my Pokemon Website</h3>
+    <div id="pokemon"></div>
+    <script>
+        /* fetch("http://localhost:3000/pokemon").then(res=>res.json()).then(pokemon => {
+            //console.log(pokemon.results);
+            pokemon.data.map(p => {
+                let span = document.createElement("span");
+                document.getElementById("pokemon").appendChild(span);
+                span.innerText = p.name;
+            });
+        }); */
+        setTimeout(()=>window.location.href = "/pokemon", 3000);
+    </script>
+</body>
+</html>
