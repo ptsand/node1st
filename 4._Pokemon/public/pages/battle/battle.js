@@ -1,20 +1,44 @@
 // const pathVariables = location.pathname.split("/");
 // const pokemonName = pathVariables.pop();
 
-// todo start the battle against this pokemon
-// fetch data about this specific pokemon
 
-fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`).then(res=>res.json()).then(pokemon => {
-    let imgSrc = pokemon.sprites.other.dream_world.front_default;
-    document.getElementById("pokemon-sprite").src = imgSrc;
-    // pokemon.data.map(p => {
-    //     let span = document.createElement("span");
-    //     document.getElementById("pokemon").appendChild(span);
-    //     span.innerText = p.name;
-    // });
+
+
+fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+.then(response => response.json())
+.then(pokemon => {
+    console.log(pokemon);
+    
+
+    const battlingPokemonImage = document.getElementById("battling-pokemon-sprite");
+    battlingPokemonImage.src = pokemon.sprites.other.dream_world.front_default;
+
+    const iWon = Math.random() >= 0.5;
+    const whoWonHeader = document.getElementById("who-won");
+    if (iWon) {
+        whoWonHeader.innerText = "You won!";
+    } else {
+        whoWonHeader.innerText = "You lost!";
+    }
+
+    const body = { 
+        pokemonBattled: pokemon.name,
+        iWon 
+    };
+
+    fetch("/api/battles", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: { "Content-type": "application/json" }
+    });
+
 });
 
-const iWon = Math.random() > 0.5;
-document.getElementById("who-won").innerText = iWon ? "I won :D" : "I lost :(";
-// Once the battle is over then post the result to my backend
+
+
+
+
+
+
+
 
