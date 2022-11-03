@@ -53,7 +53,8 @@ app.get("/contact", (req, res) => {
     res.send(contactPage);
 });
 
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const PORT = process.env.PORT || 8080;
 
